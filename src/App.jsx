@@ -1,16 +1,27 @@
+/* Styles */
 import './App.css';
-import Cards from './components/Cards.jsx';
-import NavBar from './components/NavBar';
-import { useState } from 'react';
-import axios from 'axios';
-import {Route, Routes} from 'react-router-dom';
+/* Components */
 import About from './views/About';
 import Detail from './views/Detail';
+import NavBar from './components/NavBar';
+import Cards from './components/Cards.jsx';
 import Form from './components/Form/Form';
+/* Hooks */
+import { useState } from 'react';
+import {Route, Routes, useLocation, useNavigate} from 'react-router-dom';
+import axios from 'axios';
+
 
 function App() {
   const [characters,setCharacters] = useState([]); // cree el estado
+ const navigate = useNavigate()
 
+ const {pathname} = useLocation()
+
+ const [acces, setAcces] = useState(false)
+
+ const EMAIL = 'mail@mail.com';
+ const PASSWORD = 'hola123';
 
   const onSearch = (id) => { // Funcion que hace el pedido al servidor usando Api Axios
     //setCharacters([...characters,example]) // para que no pise y se acumule
@@ -42,7 +53,7 @@ const onClose = (id) => { // Funcion que dara vida al boton 'X' que renderiza Ca
     <NavBar onSearch={onSearch} />
 
     <Routes>
-      <Route path='/' element={<Form/>}/>
+       <Route path='/' element={<Form/>}/> 
       <Route path='/home' element={<Cards characters={characters} onClose={onClose} />} />
       <Route path='/about' element={<About />} />
       <Route path='/detail/:id' element={<Detail />} />
